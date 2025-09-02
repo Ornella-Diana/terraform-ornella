@@ -1,13 +1,24 @@
 provider "aws" {
-  region = "us-east-1" 
+  region = "us-east-1"  
 }
 
-resource "aws_instance" "terraform_ornella" {
-  ami                    = "ami-00ca32bbc84273381"
-  instance_type          = "t2.small"
-  key_name               = "ornella"
+resource "aws_s3_bucket" "terra_bucket" {
+  bucket = "terra-buck-ornella-s1"
+
+  versioning {
+    enabled = true
+  }
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 
   tags = {
-    Name = "terra-ornella-v1"
+    Name        = "terra-buck-ornella-s1"
+    Environment = "dev"
   }
 }
